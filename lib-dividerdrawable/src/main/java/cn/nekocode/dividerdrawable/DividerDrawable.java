@@ -39,15 +39,24 @@ public class DividerDrawable extends Drawable {
 
 
     public DividerDrawable() {
-        paint = new Paint();
-        paint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
-        paint.setColor(DEFAULT_COLOR);
-
-        layout = new DividerLayout();
+        this(null, null);
     }
 
-    public DividerDrawable(Paint paint, DividerLayout layout) {
+    public DividerDrawable(@Nullable Paint paint) {
+        this(paint, null);
+    }
+
+    public DividerDrawable(@Nullable Paint paint, @Nullable DividerLayout layout) {
+        if (paint == null) {
+            paint = new Paint();
+            paint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
+            paint.setColor(DEFAULT_COLOR);
+        }
         this.paint = paint;
+
+        if (layout == null) {
+            layout = new DividerLayout();
+        }
         this.layout = layout;
     }
 
@@ -55,7 +64,7 @@ public class DividerDrawable extends Drawable {
         return paint;
     }
 
-    public void setPaint(Paint paint) {
+    public void setPaint(@NonNull Paint paint) {
         this.paint = paint;
     }
 
@@ -63,7 +72,7 @@ public class DividerDrawable extends Drawable {
         return layout;
     }
 
-    public void setLayout(DividerLayout layout) {
+    public void setLayout(@NonNull DividerLayout layout) {
         this.layout = layout;
         notifyLayoutChanged();
     }
