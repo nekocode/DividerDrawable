@@ -3,8 +3,6 @@
 
 This library can help you easily layout and draw dividers on existing views. For better performance, don't create new views for drawing dividers anymore, use drawable instead.
 
-![Screenshot](art/screenshot.png)
-
 ## Install
 
 ```gradle
@@ -41,3 +39,5 @@ If you changed the divider's layout params, don't forget to notify the changes.
 ```java
 dividerDrawable.notifyLayoutChanged();
 ```
+
+![Screenshot](art/screenshot.png)
