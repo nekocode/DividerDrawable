@@ -17,10 +17,15 @@ dependencies {
 
 ## Usage
 
-Obtain a new `DividerDrawable` instance. And setup the layout params for divider.
+Obtain a new `DividerDrawable` instance.
 
 ```java
 DividerDrawable dividerDrawable = new DividerDrawable(paint);
+```
+
+Similar to the view layout, the `DividerDrawable` also has a layout that can help draw divider to the relative position of the container(view/drawable/canvas).
+
+```java
 dividerDrawable.getLayout()
         .setOrientation(DividerLayout.ORIENTATION_VERTICAL)
         .setAlign(DividerLayout.ALIGN_PARENT_BOTTOM)
