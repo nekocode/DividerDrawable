@@ -16,8 +16,8 @@
 
 package cn.nekocode.dividerdrawable;
 
-import android.content.res.Resources;
 import android.support.annotation.IntDef;
+import android.support.annotation.NonNull;
 
 /**
  * @author nekocode (nekocode.cn@gmail.com)
@@ -60,6 +60,7 @@ public class DividerLayout {
         return orientation;
     }
 
+    @NonNull
     public DividerLayout setOrientation(int orientation) {
         this.orientation = orientation;
         return this;
@@ -69,13 +70,15 @@ public class DividerLayout {
         return length;
     }
 
+    @NonNull
     public DividerLayout setLength(int length) {
         this.length = (length >= MATCH_PARENT ? length : 0);
         return this;
     }
 
+    @NonNull
     public DividerLayout setLengthDp(int lengthDp) {
-        this.length = (lengthDp >= MATCH_PARENT ? (int) dp2px(lengthDp) : 0);
+        this.length = (lengthDp >= MATCH_PARENT ? (int) DividerUtils.dp2px(lengthDp) : 0);
         return this;
     }
 
@@ -83,6 +86,7 @@ public class DividerLayout {
         return align;
     }
 
+    @NonNull
     public DividerLayout setAlign(int align) {
         this.align = align;
         return this;
@@ -92,6 +96,7 @@ public class DividerLayout {
         return center;
     }
 
+    @NonNull
     public DividerLayout setCenter(int center) {
         this.center = center;
         return this;
@@ -101,13 +106,15 @@ public class DividerLayout {
         return marginLeft;
     }
 
+    @NonNull
     public DividerLayout setMarginLeft(int marginLeft) {
         this.marginLeft = marginLeft;
         return this;
     }
 
+    @NonNull
     public DividerLayout setMarginLeftDp(int marginLeftDp) {
-        this.marginLeft = (int) dp2px(marginLeftDp);
+        this.marginLeft = (int) DividerUtils.dp2px(marginLeftDp);
         return this;
     }
 
@@ -115,13 +122,15 @@ public class DividerLayout {
         return marginTop;
     }
 
+    @NonNull
     public DividerLayout setMarginTop(int marginTop) {
         this.marginTop = marginTop;
         return this;
     }
 
+    @NonNull
     public DividerLayout setMarginTopDp(int marginTopDp) {
-        this.marginTop = (int) dp2px(marginTopDp);
+        this.marginTop = (int) DividerUtils.dp2px(marginTopDp);
         return this;
     }
 
@@ -129,13 +138,15 @@ public class DividerLayout {
         return marginRight;
     }
 
+    @NonNull
     public DividerLayout setMarginRight(int marginRight) {
         this.marginRight = marginRight;
         return this;
     }
 
+    @NonNull
     public DividerLayout setMarginRightDp(int marginRightDp) {
-        this.marginRight = (int) dp2px(marginRightDp);
+        this.marginRight = (int) DividerUtils.dp2px(marginRightDp);
         return this;
     }
 
@@ -143,20 +154,22 @@ public class DividerLayout {
         return marginBottom;
     }
 
+    @NonNull
     public DividerLayout setMarginBottom(int marginBottom) {
         this.marginBottom = marginBottom;
         return this;
     }
 
+    @NonNull
     public DividerLayout setMarginBottomDp(int marginBottomDp) {
-        this.marginBottom = (int) dp2px(marginBottomDp);
+        this.marginBottom = (int) DividerUtils.dp2px(marginBottomDp);
         return this;
     }
 
     /**
      * @return int[] {startX, startY, stopX, stopY}
      */
-    public int[] layout(int width, int height, float strokeWidth) {
+    public int[] layout(int width, int height, int strokeWidth) {
         final boolean alignLeft = !((align & ALIGN_PARENT_RIGHT) > 0);
         final boolean alignTop = !((align & ALIGN_PARENT_BOTTOM) > 0);
         final boolean h = orientation == ORIENTATION_HORIZONTAL;
@@ -196,33 +209,39 @@ public class DividerLayout {
         return new int[]{sx, ex};
     }
 
-    private int[] layoutHorizontalYAxis(boolean centerVertical, boolean alignTop, int height, float strokeWidth) {
+    private int[] layoutHorizontalYAxis(boolean centerVertical, boolean alignTop, int height, int strokeWidth) {
         int sy, ey;
         if (!centerVertical) {
             if (alignTop) {
-                sy = ey = getMarginTop() + (int) (strokeWidth / 2f);
+                sy = getMarginTop();
+                ey = sy + strokeWidth;
             } else {
-                sy = ey = height - getMarginBottom() - (int) (strokeWidth / 2f);
+                ey = height - getMarginBottom();
+                sy = ey - strokeWidth;
             }
 
         } else {
-            sy = ey = height / 2;
+            sy = (height - strokeWidth) / 2;
+            ey = sy + strokeWidth;
         }
 
         return new int[]{sy, ey};
     }
 
-    private int[] layoutVerticalXAxis(boolean centerHorizontal, boolean alignLeft, int width, float strokeWidth) {
+    private int[] layoutVerticalXAxis(boolean centerHorizontal, boolean alignLeft, int width, int strokeWidth) {
         int sx, ex;
         if (!centerHorizontal) {
             if (alignLeft) {
-                sx = ex = getMarginLeft() + (int) (strokeWidth / 2f);
+                sx = getMarginLeft();
+                ex = sx + strokeWidth;
             } else {
-                sx = ex = width - getMarginRight() - (int) (strokeWidth / 2f);
+                ex = width - getMarginRight();
+                sx = ex - strokeWidth;
             }
 
         } else {
-            sx = ex = width / 2;
+            sx = (width - strokeWidth) /2;
+            ex = sx + strokeWidth;
         }
 
         return new int[]{sx, ex};
@@ -251,10 +270,5 @@ public class DividerLayout {
         }
 
         return new int[]{sy, ey};
-    }
-
-    private static float dp2px(float dipValue) {
-        final float scale = Resources.getSystem().getDisplayMetrics().density;
-        return dipValue * scale + 0.5f;
     }
 }

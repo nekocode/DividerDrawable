@@ -17,10 +17,12 @@ dependencies {
 
 ## Usage
 
-Obtain a new `DividerDrawable` instance.
+Obtain a new `DividerDrawable` instance. And you can set the color and stroke witdh of the divider.
 
 ```java
-DividerDrawable dividerDrawable = new DividerDrawable(paint);
+final DividerDrawable dividerDrawable = new DividerDrawable();
+dividerDrawable.setStrokeWidth(10)
+        .setColor(0xFFFFFFFF)
 ```
 
 Similar to the view layout, the `DividerDrawable` also has a layout that can help draw divider to the relative position of the container(view/drawable/canvas).

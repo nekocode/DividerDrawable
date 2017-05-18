@@ -30,29 +30,21 @@ import android.support.annotation.Nullable;
  */
 public class DividerDrawable extends Drawable {
     public static final int DEFAULT_COLOR = 0xFFCCCCCC;
-    public static final int DEFAULT_STROKE_WIDTH = 1;
 
-    private Paint paint;
+    private final Paint paint;
     private DividerLayout layout;
+    private int strokeWidth;
     private int wh[] = new int[2];
     private int layouted[];
 
 
     public DividerDrawable() {
-        this(null, null);
+        this(null);
     }
 
-    public DividerDrawable(@Nullable Paint paint) {
-        this(paint, null);
-    }
-
-    public DividerDrawable(@Nullable Paint paint, @Nullable DividerLayout layout) {
-        if (paint == null) {
-            paint = new Paint();
-            paint.setStrokeWidth(DEFAULT_STROKE_WIDTH);
-            paint.setColor(DEFAULT_COLOR);
-        }
-        this.paint = paint;
+    public DividerDrawable(@Nullable DividerLayout layout) {
+        paint = new Paint();
+        paint.setColor(DEFAULT_COLOR);
 
         if (layout == null) {
             layout = new DividerLayout();
@@ -60,14 +52,33 @@ public class DividerDrawable extends Drawable {
         this.layout = layout;
     }
 
-    public Paint getPaint() {
-        return paint;
+    public int getStrokeWidth() {
+        return strokeWidth;
     }
 
-    public void setPaint(@NonNull Paint paint) {
-        this.paint = paint;
+    @NonNull
+    public DividerDrawable setStrokeWidth(int strokeWidth) {
+        this.strokeWidth = strokeWidth;
+        return this;
     }
 
+    @NonNull
+    public DividerDrawable setStrokeWidthDp(int strokeWidthDp) {
+        this.strokeWidth = (int) DividerUtils.dp2px(strokeWidthDp);
+        return this;
+    }
+
+    public int getColor() {
+        return paint.getColor();
+    }
+
+    @NonNull
+    public DividerDrawable setColor(int color) {
+        paint.setColor(color);
+        return this;
+    }
+
+    @NonNull
     public DividerLayout getLayout() {
         return layout;
     }
@@ -87,11 +98,11 @@ public class DividerDrawable extends Drawable {
         final int w = canvas.getWidth();
         final int h = canvas.getHeight();
         if (layouted == null || wh[0] != w || wh[1] != h) {
-            layouted = layout.layout(w, h, paint.getStrokeWidth());
+            layouted = layout.layout(w, h, strokeWidth);
             wh[0] = w;
             wh[1] = h;
         }
-        canvas.drawLine(layouted[0], layouted[1], layouted[2], layouted[3], paint);
+        canvas.drawRect(layouted[0], layouted[1], layouted[2], layouted[3], paint);
     }
 
     @Override

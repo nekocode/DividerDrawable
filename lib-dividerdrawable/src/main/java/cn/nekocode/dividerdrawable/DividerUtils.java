@@ -16,6 +16,7 @@
 
 package cn.nekocode.dividerdrawable;
 
+import android.content.res.Resources;
 import android.graphics.drawable.Drawable;
 import android.graphics.drawable.LayerDrawable;
 import android.os.Build;
@@ -46,6 +47,11 @@ public class DividerUtils {
         } else {
             return sourceDrawable;
         }
+    }
+
+    public static float dp2px(float dipValue) {
+        final float scale = Resources.getSystem().getDisplayMetrics().density;
+        return dipValue * scale + 0.5f;
     }
 
     private static void setBackground(View view, Drawable drawable) {
