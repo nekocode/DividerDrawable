@@ -29,11 +29,12 @@ import android.support.annotation.Nullable;
  * @author nekocode (nekocode.cn@gmail.com)
  */
 public class DividerDrawable extends Drawable {
+    public static final int DEFAULT_STORKE_WIDTH = 1;
     public static final int DEFAULT_COLOR = 0xFFCCCCCC;
 
     private final Paint paint;
     private DividerLayout layout;
-    private int strokeWidth;
+    private int strokeWidth = DEFAULT_STORKE_WIDTH;
     private int wh[] = new int[2];
     private int layouted[];
 
